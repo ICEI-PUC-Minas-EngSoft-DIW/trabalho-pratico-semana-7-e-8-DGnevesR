@@ -12,13 +12,13 @@ const posts = [
             {
                 username: "ana_aninha",
                 handle: "@Ana_Aninha_Anão",
-                text: "Tá onde mano ?",
+                text: "Cê tá bem mano ?",
                 date: "2025-10-01"
             },
             {
                 username: "frio_gelado",
                 handle: "@Frio_Gelado",
-                text: "Seloko, muito chave essa foto",
+                text: "Foto mídia",
                 date: "2025-10-01"
             }
         ]
@@ -36,7 +36,7 @@ const posts = [
             {
                 username: "boca_085",
                 handle: "@Boca_085",
-                text: "Que inspirador!",
+                text: "Tenho nem osso pra isso",
                 date: "2025-10-02"
             }
         ]
@@ -54,13 +54,13 @@ const posts = [
             {
                 username: "flakes_power",
                 handle: "@Flakes_Power",
-                text: "Parece até IA KAKAKAKAKA",
+                text: "Parece até IA KAAKAKKAKAAKAKA",
                 date: "2025-10-03"
             },
             {
                 username: "nobru_oapelao",
                 handle: "@Nobru_OApelão",
-                text: "CóCóooooooo",
+                text: "Cócóóóóóóóóó",
                 date: "2025-10-03"
             }
         ]
@@ -124,6 +124,41 @@ function renderPostDetails() {
                 });
             } else {
                 commentsSection.innerHTML += '<p>Sem comentários ainda.</p>';
+            }
+
+            const commentInput = document.getElementById('novo-comentario');
+            const commentButton = document.getElementById('enviar-comentario');
+            if (commentButton && commentInput) {
+                commentButton.addEventListener('click', () => {
+                    const commentText = commentInput.value.trim();
+                    if (commentText) {
+                        
+                        const newComment = {
+                            username: "user.maneiro",
+                            handle: "@user.bolado",
+                            text: commentText,
+                            date: new Date().toISOString().split('T')[0] // Data atual no formato YYYY-MM-DD
+                        };
+                        post.comments.push(newComment);
+
+                        commentsSection.innerHTML = '<h3>Comentários</h3>';
+                        post.comments.forEach(comment => {
+                            const commentElement = document.createElement('div');
+                            commentElement.classList.add('comment');
+                            commentElement.innerHTML = `
+                                <p><strong>${comment.username}</strong> ${comment.handle} · ${comment.date}</p>
+                                <p>${comment.text}</p>
+                            `;
+                            commentsSection.appendChild(commentElement);
+                        });
+
+                        postDetails.querySelector('p:last-child').innerHTML = `
+                            ❤️ ${post.likes} 🔄 ${post.retweets} 💬 ${post.comments.length}
+                        `;
+
+                        commentInput.value = '';
+                    }
+                });
             }
         } else {
             postDetails.innerHTML = '<p>Post não encontrado.</p>';

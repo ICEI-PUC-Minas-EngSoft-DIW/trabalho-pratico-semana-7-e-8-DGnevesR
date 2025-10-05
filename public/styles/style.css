@@ -197,6 +197,28 @@ body {
     margin: 5px 0;
 }
 
+.postar-comentario {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.postar-comentario input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background-color: #333;
+    color: white;
+}
+
+.postar-comentario button {
+    padding: 8px 15px;
+    font-size: 1rem;
+}
+
 .direita {
     width: 300px;
     padding: 20px;
