@@ -24,7 +24,7 @@ Leia o enunciado completo no Canvas.
 
 ## Print da página de detalhes do item
 
-![Detalhes](./public/img/print_detalhes_comentario.png)
+![Detalhes](/public/img/prints/print_detalhes_comentario.png)
 
 ## Cole aqui abaixo a estrutura JSON utilizada no app.js
 
