@@ -19,12 +19,12 @@ Leia o enunciado completo no Canvas.
 
 ## Print da Home-Page
 
-![Home-Page](/public/img/print_parte_1.png)
-![Home-Page](/public/img/print_parte_2.png)
+![Home-Page 1](./public/img/print_parte_1.png)
+![Home-Page 2](./public/img/print_parte_2.png)
 
 ## Print da página de detalhes do item
 
-![Detalhes](print_detalhes_comentario.png)
+![Detalhes](./public/img/print_detalhes_comentario.png)
 
 ## Cole aqui abaixo a estrutura JSON utilizada no app.js
 
