@@ -68,13 +68,10 @@ const posts = [
 ];
 
 function renderPosts() {
-    
     if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
         const feed = document.querySelector('.feed');
         if (!feed) return;
-
         feed.innerHTML = '';
-
         posts.forEach(post => {
             const postElement = document.createElement('div');
             postElement.classList.add('post');
@@ -90,28 +87,64 @@ function renderPosts() {
     }
 }
 
+function renderCarousel() {
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+        const carouselInner = document.querySelector('#highlightCarousel .carousel-inner');
+        const carouselIndicators = document.querySelector('#highlightCarousel .carousel-indicators');
+        if (!carouselInner || !carouselIndicators) return;
+        carouselInner.innerHTML = '';
+        carouselIndicators.innerHTML = '';
+        posts.forEach((post, index) => {
+            const isActive = index === 0 ? 'active' : '';
+            const indicator = `
+                <button type="button" data-bs-target="#highlightCarousel" data-bs-slide-to="${index}" class="${isActive}" aria-label="Slide ${index + 1}"></button>
+            `;
+            const item = `
+                <div class="carousel-item ${isActive}">
+                    <img src="${post.image}" class="d-block w-100" alt="${post.username}">
+                    <div class="carousel-caption d-block">
+                        <h5>${post.username}</h5>
+                        <p>${post.text.substring(0, 100)}${post.text.length > 100 ? '...' : ''}</p>
+                        <a href="detalhes.html?id=${post.id}" class="highlight-button">Ver mais</a>
+                    </div>
+                </div>
+            `;
+            carouselIndicators.innerHTML += indicator;
+            carouselInner.innerHTML += item;
+        });
+    }
+}
+
 function renderPostDetails() {
-    
     if (window.location.pathname.includes('detalhes.html')) {
         const postDetails = document.getElementById('post-details');
+        const linkedPhotos = document.getElementById('linked-photos');
         const commentsSection = document.getElementById('comments-section');
-        if (!postDetails || !commentsSection) return;
-
+        if (!postDetails || !linkedPhotos || !commentsSection) return;
         const urlParams = new URLSearchParams(window.location.search);
         const postId = parseInt(urlParams.get('id'));
-
         const post = posts.find(p => p.id === postId);
-
         if (post) {
-            
             postDetails.innerHTML = `
-                <p><strong>${post.username}</strong> ${post.handle} · ${post.date}</p>
-                <p>${post.text}</p>
+                <p><strong>Usuário:</strong> ${post.username} (${post.handle})</p>
+                <p><strong>Data:</strong> ${post.date}</p>
+                <p><strong>Texto:</strong> ${post.text}</p>
                 ${post.image ? `<img src="${post.image}" alt="Imagem do post">` : ''}
-                <p>❤️ ${post.likes} 🔄 ${post.retweets} 💬 ${post.comments.length}</p>
+                <p><strong>Engajamento:</strong> ❤️ ${post.likes} 🔄 ${post.retweets} 💬 ${post.comments.length}</p>
             `;
-
-            commentsSection.innerHTML = '<h3>Comentários</h3>';
+            linkedPhotos.innerHTML = '';
+            if (post.image) {
+                const photoCard = document.createElement('div');
+                photoCard.classList.add('photo-card');
+                photoCard.innerHTML = `
+                    <img src="${post.image}" alt="Foto vinculada">
+                    <h5>Foto de ${post.username}</h5>
+                `;
+                linkedPhotos.appendChild(photoCard);
+            } else {
+                linkedPhotos.innerHTML = '<p>Sem fotos vinculadas.</p>';
+            }
+            commentsSection.innerHTML = '';
             if (post.comments.length > 0) {
                 post.comments.forEach(comment => {
                     const commentElement = document.createElement('div');
@@ -123,25 +156,22 @@ function renderPostDetails() {
                     commentsSection.appendChild(commentElement);
                 });
             } else {
-                commentsSection.innerHTML += '<p>Sem comentários ainda.</p>';
+                commentsSection.innerHTML = '<p>Sem comentários ainda.</p>';
             }
-
             const commentInput = document.getElementById('novo-comentario');
             const commentButton = document.getElementById('enviar-comentario');
             if (commentButton && commentInput) {
                 commentButton.addEventListener('click', () => {
                     const commentText = commentInput.value.trim();
                     if (commentText) {
-                        
                         const newComment = {
                             username: "user.maneiro",
                             handle: "@user.bolado",
                             text: commentText,
-                            date: new Date().toISOString().split('T')[0] // Data atual no formato YYYY-MM-DD
+                            date: new Date().toISOString().split('T')[0]
                         };
                         post.comments.push(newComment);
-
-                        commentsSection.innerHTML = '<h3>Comentários</h3>';
+                        commentsSection.innerHTML = '';
                         post.comments.forEach(comment => {
                             const commentElement = document.createElement('div');
                             commentElement.classList.add('comment');
@@ -151,17 +181,16 @@ function renderPostDetails() {
                             `;
                             commentsSection.appendChild(commentElement);
                         });
-
                         postDetails.querySelector('p:last-child').innerHTML = `
-                            ❤️ ${post.likes} 🔄 ${post.retweets} 💬 ${post.comments.length}
+                            <strong>Engajamento:</strong> ❤️ ${post.likes} 🔄 ${post.retweets} 💬 ${post.comments.length}
                         `;
-
                         commentInput.value = '';
                     }
                 });
             }
         } else {
             postDetails.innerHTML = '<p>Post não encontrado.</p>';
+            linkedPhotos.innerHTML = '';
             commentsSection.innerHTML = '';
         }
     }
@@ -169,5 +198,6 @@ function renderPostDetails() {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderPosts();
+    renderCarousel();
     renderPostDetails();
 });
