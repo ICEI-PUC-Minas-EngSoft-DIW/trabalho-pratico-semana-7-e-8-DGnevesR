@@ -7,12 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
 </head>
-
 <body>
     <header class="header">
         <div class="logo">
-            <img src="img/logo.jpg" alt="Imagem da Logo" class="logo-img">
-            <h1 class="logo-text">Zwitter</h1>
+            <a href="index.html"><img src="img/logo.jpg" alt="Imagem da Logo" class="logo-img"></a>
         </div>
         <div class="postar-central">
            <input type="text" name="postar" placeholder="O que está acontecendo?">
@@ -26,7 +24,6 @@
             </ul>
         </nav>
     </header>
-
     <div class="main-container">
         <aside class="lateral">
             <div class="perfil">
@@ -50,16 +47,14 @@
                 </ul>
             </nav>
         </aside>
-
         <main class="feed">
             
         </main>
-
         <aside class="direita">
             <div class="noticias">
                 <p>@Ana_Aninha_Anão</p>
                 <p>
-                    When an unknown printer took a galley to make a type specimen book.
+                    When an unknown printer took a galley to makeinki a type specimen book.
                 </p>
             </div>
             <div class="noticias">
@@ -72,7 +67,7 @@
             <div class="noticias">
                 <p>@Boca_085</p>
                 <p>
-                    An unknown 
+                    An unknown
                     printer took a when a type specimen galley to make book.
                 </p>
                 <img src="img/praia.webp" alt="Imagem de noticia 3">
@@ -89,31 +84,25 @@
             </div>
         </aside>
     </div>
-
     <section class="highlight-section">
         <h2 class="section-title">Destaques da Comunidade</h2>
-        <div class="highlights">
-            <div class="highlight-card">
-                <img src="img/sol.jpg" alt="Evento Solar">
-                <h3>Evento Solar</h3>
-                <p>Junte-se ao nosso evento virtual sobre energias renováveis e sustentabilidade.</p>
-                <a href="#ver-mais" class="highlight-button">Ver mais</a>
+        <div id="highlightCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+
             </div>
-            <div class="highlight-card">
-                <img src="img/yoga.jpg" alt="Grupo de Meditação">
-                <h3>Grupo de Meditação</h3>
-                <p>Participe do grupo de meditação para relaxar e compartilhar experiências.</p>
-                <a href="#ver-mais" class="highlight-button">Ver mais</a>
+            <div class="carousel-inner">
+                
             </div>
-            <div class="highlight-card">
-                <img src="img/aguia.jpg" alt="Aventura na Natureza">
-                <h3>Aventura na Natureza</h3> <br>
-                <p>Explore trilhas e aventuras ao ar livre com nossa comunidade.</p>
-                <a href="#ver-mais" class="highlight-button">Ver mais</a>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#highlightCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#highlightCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </section>
-
     <footer class="rodape">
         <div class="conteudo-rodape">
             <div class="coluna">
@@ -139,7 +128,6 @@
             </div>
         </div>
     </footer>
-
     <script src="app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
