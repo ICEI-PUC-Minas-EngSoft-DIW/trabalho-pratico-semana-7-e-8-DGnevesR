@@ -17,14 +17,9 @@ Leia o enunciado completo no Canvas.
 - Proposta de projeto escolhida: Uma rede social inspirada no Twitter "X".
 - Breve descrição sobre seu projeto: Rede social inspirada no X, contendo um Cabeçalho, aba lateral um feed detalhado, no canto direito recomendações, e mais abaixo uma section com destaques da comunidade e por fim o rodapé.
 
-## Print da Home-Page
+## WireFrame
 
-![Home-Page-1](/public/img/prints/print_parte_1.png)
-![Home-Page-2](/public/img/prints/print_parte_2.png)
-
-## Print da página de detalhes do item
-
-![Detalhes](/public/img/prints/print_detalhes_comentario.png)
+![Figma](./public/img/Desktop%20-%201.png)
 
 ## Cole aqui abaixo a estrutura JSON utilizada no app.js
 
