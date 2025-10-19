@@ -121,9 +121,11 @@ function renderPostDetails() {
         const linkedPhotos = document.getElementById('linked-photos');
         const commentsSection = document.getElementById('comments-section');
         if (!postDetails || !linkedPhotos || !commentsSection) return;
+        
         const urlParams = new URLSearchParams(window.location.search);
-        const postId = parseInt(urlParams.get('id'));
+        const postId = parseInt(urlParams.get('id'), 10);
         const post = posts.find(p => p.id === postId);
+
         if (post) {
             postDetails.innerHTML = `
                 <p><strong>Usuário:</strong> ${post.username} (${post.handle})</p>
@@ -132,61 +134,45 @@ function renderPostDetails() {
                 ${post.image ? `<img src="${post.image}" alt="Imagem do post">` : ''}
                 <p><strong>Engajamento:</strong> ❤️ ${post.likes} 🔄 ${post.retweets} 💬 ${post.comments.length}</p>
             `;
-            linkedPhotos.innerHTML = '';
-            if (post.image) {
-                const photoCard = document.createElement('div');
-                photoCard.classList.add('photo-card');
-                photoCard.innerHTML = `
+            
+            linkedPhotos.innerHTML = post.image ? `
+                <div class="photo-card">
                     <img src="${post.image}" alt="Foto vinculada">
                     <h5>Foto de ${post.username}</h5>
-                `;
-                linkedPhotos.appendChild(photoCard);
-            } else {
-                linkedPhotos.innerHTML = '<p>Sem fotos vinculadas.</p>';
-            }
-            commentsSection.innerHTML = '';
-            if (post.comments.length > 0) {
-                post.comments.forEach(comment => {
-                    const commentElement = document.createElement('div');
-                    commentElement.classList.add('comment');
-                    commentElement.innerHTML = `
-                        <p><strong>${comment.username}</strong> ${comment.handle} · ${comment.date}</p>
-                        <p>${comment.text}</p>
-                    `;
-                    commentsSection.appendChild(commentElement);
-                });
-            } else {
-                commentsSection.innerHTML = '<p>Sem comentários ainda.</p>';
-            }
+                </div>
+            ` : '<p>Sem fotos vinculadas.</p>';
+
+            commentsSection.innerHTML = post.comments.length > 0 ? post.comments.map(comment => `
+                <div class="comment">
+                    <p><strong>${comment.username}</strong> ${comment.handle} · ${comment.date}</p>
+                    <p>${comment.text}</p>
+                </div>
+            `).join('') : '<p>Sem comentários ainda.</p>';
+
             const commentInput = document.getElementById('novo-comentario');
             const commentButton = document.getElementById('enviar-comentario');
             if (commentButton && commentInput) {
-                commentButton.addEventListener('click', () => {
+                commentButton.onclick = () => {
                     const commentText = commentInput.value.trim();
                     if (commentText) {
-                        const newComment = {
+                        post.comments.push({
                             username: "user.maneiro",
                             handle: "@user.bolado",
                             text: commentText,
                             date: new Date().toISOString().split('T')[0]
-                        };
-                        post.comments.push(newComment);
-                        commentsSection.innerHTML = '';
-                        post.comments.forEach(comment => {
-                            const commentElement = document.createElement('div');
-                            commentElement.classList.add('comment');
-                            commentElement.innerHTML = `
+                        });
+                        commentsSection.innerHTML = post.comments.map(comment => `
+                            <div class="comment">
                                 <p><strong>${comment.username}</strong> ${comment.handle} · ${comment.date}</p>
                                 <p>${comment.text}</p>
-                            `;
-                            commentsSection.appendChild(commentElement);
-                        });
+                            </div>
+                        `).join('');
                         postDetails.querySelector('p:last-child').innerHTML = `
                             <strong>Engajamento:</strong> ❤️ ${post.likes} 🔄 ${post.retweets} 💬 ${post.comments.length}
                         `;
                         commentInput.value = '';
                     }
-                });
+                };
             }
         } else {
             postDetails.innerHTML = '<p>Post não encontrado.</p>';
